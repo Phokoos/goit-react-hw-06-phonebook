@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
 import css from './contactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrementAction, incrementAction } from 'redux/counter/actons';
+// import { decrementAction, incrementAction } from 'redux/counter/actons';
+import { counterSelector } from 'redux/counter/selectors';
+import { decrement, increment } from 'redux/counter/counterSlice';
 
 const ContactForm = ({ formSubmit }) => {
-  const state = useSelector(state => state.counter);
+  const state = useSelector(counterSelector);
   const dispatch = useDispatch();
   console.log('CL in form: ', state);
 
   const handleIncrement = () => {
-    dispatch(incrementAction(1));
+    dispatch(increment(1));
   };
   const handleDecrement = () => {
-    dispatch(decrementAction(1));
+    dispatch(decrement(1));
   };
 
   return (
