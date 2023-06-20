@@ -1,7 +1,20 @@
 import PropTypes from 'prop-types';
 import css from './contactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrementAction, incrementAction } from 'redux/counter/actons';
 
 const ContactForm = ({ formSubmit }) => {
+  const state = useSelector(state => state.counter);
+  const dispatch = useDispatch();
+  console.log('CL in form: ', state);
+
+  const handleIncrement = () => {
+    dispatch(incrementAction(1));
+  };
+  const handleDecrement = () => {
+    dispatch(decrementAction(1));
+  };
+
   return (
     <form className={css.phonebookForm} onSubmit={formSubmit}>
       <label className={css.phonebookForm__label}>
@@ -28,6 +41,21 @@ const ContactForm = ({ formSubmit }) => {
       </label>
       <button className={css.phonebookForm__btn} type="submit">
         Add contact
+      </button>
+      <button
+        onClick={handleIncrement}
+        className={css.phonebookForm__btn}
+        type="button"
+      >
+        +
+      </button>
+      <div>{state.total}</div>
+      <button
+        onClick={handleDecrement}
+        className={css.phonebookForm__btn}
+        type="button"
+      >
+        -
       </button>
     </form>
   );
