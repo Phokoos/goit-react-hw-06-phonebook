@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { counterReducer } from "./counter/counterSlice";
+import { phonebookReducer } from "./phonebook/phonebookSlice";
 
 export const reducer = combineReducers({
-	counter: counterReducer,
+	phonebook: phonebookReducer,
 }) 

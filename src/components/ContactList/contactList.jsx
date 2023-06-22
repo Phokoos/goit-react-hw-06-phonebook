@@ -1,15 +1,31 @@
 import PropTypes from 'prop-types';
 import css from './contactList.module.css';
+import {
+  phonebookContactsSelector,
+  phonebookFilterSelector,
+} from 'redux/phonebook/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeContact } from 'redux/phonebook/phonebookSlice';
 
-const ContactList = ({ contacts, filter, removeContacts }) => {
+const ContactList = () => {
+  const contactsState = useSelector(phonebookContactsSelector);
+  const filterState = useSelector(phonebookFilterSelector);
+
+  const dispatch = useDispatch();
+
+  const removeContacts = event => {
+    dispatch(removeContact(event.target.id));
+  };
+
   return (
     <ul className={css.contacts__list}>
-      {contacts.map(data => {
-        if (filter === '') {
+      {contactsState.map(data => {
+        if (filterState === '') {
           return (
-            <li key={data.id} id={data.id} className={css.contacts__item}>
+            <li key={data.id} className={css.contacts__item}>
               {data.name}: {data.number}
               <button
+                id={data.id}
                 className={css.contacts__btn}
                 type="button"
                 onClick={removeContacts}
@@ -19,11 +35,12 @@ const ContactList = ({ contacts, filter, removeContacts }) => {
             </li>
           );
         }
-        if (data.name.toLowerCase().includes(filter.toLowerCase())) {
+        if (data.name.toLowerCase().includes(filterState.toLowerCase())) {
           return (
-            <li key={data.id} id={data.id} className={css.contacts__item}>
+            <li key={data.id} className={css.contacts__item}>
               {data.name}: {data.number}
               <button
+                id={data.id}
                 className={css.contacts__btn}
                 type="button"
                 onClick={removeContacts}
@@ -37,12 +54,6 @@ const ContactList = ({ contacts, filter, removeContacts }) => {
       })}
     </ul>
   );
-};
-
-ContactList.prototype = {
-  contacts: PropTypes.array,
-  filter: PropTypes.string,
-  removeContacts: PropTypes.func,
 };
 
 export default ContactList;

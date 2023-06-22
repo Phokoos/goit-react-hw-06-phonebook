@@ -1,20 +1,34 @@
 import PropTypes from 'prop-types';
 import css from './contactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-// import { decrementAction, incrementAction } from 'redux/counter/actons';
-import { counterSelector } from 'redux/counter/selectors';
-import { decrement, increment } from 'redux/counter/counterSlice';
+import { addContact } from 'redux/phonebook/phonebookSlice';
+import { phonebookContactsSelector } from 'redux/phonebook/selectors';
 
-const ContactForm = ({ formSubmit }) => {
-  const state = useSelector(counterSelector);
+const ContactForm = () => {
+  const contactsState = useSelector(phonebookContactsSelector);
   const dispatch = useDispatch();
-  console.log('CL in form: ', state);
 
-  const handleIncrement = () => {
-    dispatch(increment(1));
-  };
-  const handleDecrement = () => {
-    dispatch(decrement(1));
+  const formSubmit = action => {
+    action.preventDefault();
+
+    const name = action.target.name.value;
+
+    if (
+      contactsState
+        .map(contact => contact.name.toLowerCase())
+        .includes(name.toLowerCase())
+    ) {
+      return alert(`Name ${name} is already here`);
+    }
+
+    dispatch(
+      addContact({
+        name: name,
+        number: action.target.number.value,
+      })
+    );
+
+    action.currentTarget.reset();
   };
 
   return (
@@ -44,27 +58,8 @@ const ContactForm = ({ formSubmit }) => {
       <button className={css.phonebookForm__btn} type="submit">
         Add contact
       </button>
-      <button
-        onClick={handleIncrement}
-        className={css.phonebookForm__btn}
-        type="button"
-      >
-        +
-      </button>
-      <div>{state.total}</div>
-      <button
-        onClick={handleDecrement}
-        className={css.phonebookForm__btn}
-        type="button"
-      >
-        -
-      </button>
     </form>
   );
-};
-
-ContactForm.prototype = {
-  formSubmit: PropTypes.func,
 };
 
 export default ContactForm;
