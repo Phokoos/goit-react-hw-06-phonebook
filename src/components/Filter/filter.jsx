@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './filter.module.css';
-import PropTypes from 'prop-types';
 import { phonebookFilterSelector } from 'redux/phonebook/selectors';
 import { setFilter } from 'redux/phonebook/phonebookSlice';
 

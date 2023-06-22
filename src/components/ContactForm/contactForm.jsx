@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import css from './contactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/phonebook/phonebookSlice';
