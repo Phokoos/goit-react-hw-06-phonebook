@@ -20,7 +20,7 @@ const Filter = () => {
         value={filterState}
         type="text"
         name="filter"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        pattern="^[A-Za-z\u0080-\uFFFF ']+$"
       />
     </label>
   );
